@@ -14,6 +14,7 @@ class TestMakeCommand extends GeneratorCommand
      */
     protected $signature = 'make:laravel-unit-test
         {name : The name of the model}
+        {--only= : Select only specific action(s)}
         {--force : Overload the existing version}';
 
     /**
@@ -21,7 +22,7 @@ class TestMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'make:laravel-unit-test';
+    protected $name = 'uwil:make:test';
 
     /**
      * The console command description.
@@ -38,13 +39,60 @@ class TestMakeCommand extends GeneratorCommand
     protected $type = "Targeted model";
 
     /**
+     * List of actions writen in the tag 'only'.
+     *
+     * @var string
+     */
+    protected $actions = "";
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
      */
     protected function getStub(): string
     {
-        return $this->resolveStubPath('/../tests/Template/CrudTest.php');
+        return $this->resolveStubPath("/../tests/Template/{$this->actions}-Test.php");
+    }
+
+    /**
+     * Get actions from the tag 'only'.
+     *
+     * @return void
+     */
+    protected function getActionsFromTagOnly(): void
+    {
+        if ($this->hasOption('force') && $this->option('only') !== null) {
+            $option = explode(",", $this->option('only'));
+            sort($option);
+            /**
+             * I = Index
+             * C = Create
+             * R = Read
+             * U = Update
+             * D = Delete
+             */
+            $actions = [
+                "I"     => ['index'],
+                "C"     => ['create'],
+                "R"     => ['read'],
+                "U"     => ['update'],
+                "D"     => ['delete'],
+                "IR"    => ['index', 'read'],
+                "RU"    => ['read', 'update'],
+                "IRU"   => ['index', 'read', 'update'],
+                "CRUD"  => ['create', 'delete', 'read', 'update'],
+                "ICRUD" => ['create', 'delete', 'index', 'read', 'update']
+            ];
+
+            if (!array_search($option, $actions)) {
+                $this->components->error("The 'only' option are invalid, please refer to the documentation.");
+                exit();
+            };
+            $this->actions = array_search($option, $actions);
+        } else {
+            $this->actions = "ICRUD";
+        } //end if
     }
 
     /**
@@ -69,6 +117,8 @@ class TestMakeCommand extends GeneratorCommand
     public function handle(): void
     {
         // phpcs:enable
+        $this->getActionsFromTagOnly();
+
         $this->validName();
 
         $name = $this->qualifyClass($this->getNameInput());

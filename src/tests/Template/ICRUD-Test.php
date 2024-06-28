@@ -4,7 +4,6 @@ namespace {{ namespace }};
 
 use App\Enums\Users\RoleEnum;
 use App\Models\{{ class }};
-
 use App\Models\User as AuthModel;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -12,11 +11,11 @@ use Tests\TestCase;
 class {{ class }}Test extends TestCase
 {
     /**
-     * TESTS GUEST CANNOT ACCESS ROUTES
+     * TESTS GUEST CANNOT ACCESS VIEWS.
      */
 
     /** @return void */
-    public function testGuestCannotAccess{{ class }}sIndex(): void
+    public function testGuestCannotAccess{{ class }}sIndexView(): void
     {
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
@@ -27,7 +26,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotAccess{{ class }}sShow(): void
+    public function testGuestCannotAccess{{ class }}sReadView(): void
     {
         $model    = {{ class }}::factory()->createOneQuietly();
         $response = $this->get(route(
@@ -40,7 +39,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotAccess{{ class }}sCreate(): void
+    public function testGuestCannotAccess{{ class }}sCreateView(): void
     {
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
@@ -51,7 +50,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotAccess{{ class }}sEdit(): void
+    public function testGuestCannotAccess{{ class }}sUpdateView(): void
     {
         $model    = {{ class }}::factory()->createOneQuietly();
         $response = $this->get(route(
@@ -64,7 +63,7 @@ class {{ class }}Test extends TestCase
     }
 
     /**
-     * TESTS GUEST CANNOT USE ROUTES.
+     * TESTS GUEST CANNOT POST MODEL.
      */
 
     /** @return void */
@@ -82,7 +81,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotEdit{{ class }}(): void
+    public function testGuestCannotUpdate{{ class }}(): void
     {
         $model    = {{ class }}::factory()->createOneQuietly();
         $response = $this->patch(
@@ -96,7 +95,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotDestroy{{ class }}(): void
+    public function testGuestCannotDelete{{ class }}(): void
     {
         $model    = {{ class }}::factory()->createOneQuietly();
         $response = $this->delete(
@@ -110,7 +109,7 @@ class {{ class }}Test extends TestCase
     }
 
     /**
-     * TESTS CONCEPTOR USER ACCESS ROUTES.
+     * TESTS USER CONCEPTOR ACCESS VIEWS.
      */
 
     /** @return void */
@@ -163,7 +162,7 @@ class {{ class }}Test extends TestCase
     }
 
     /** @return void */
-    public function testUserConceptorCanAccess{{ class }}sEditView(): void
+    public function testUserConceptorCanAccess{{ class }}sUpdateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
         $authModel->update(['role' => RoleEnum::conceptor]);
@@ -180,40 +179,40 @@ class {{ class }}Test extends TestCase
     }
 
     /**
-     * TESTS CAN FUNCTIONNALITIES.
+     * TESTS CAN ACTIONS ON MODEL.
      */
 
     /** @return void */
     public function testCanCreate{{ class }}(): void
     {
-        ${{ camelCaseClass }}Created = {{ class }}::factory()->createOneQuietly();
-        $this->assertModelExists(${{ camelCaseClass }}Created);
+        $model = {{ class }}::factory()->createOneQuietly();
+        $this->assertModelExists($model);
     }
 
     /** @return void */
     public function testCanUpdate{{ class }}(): void
     {
-        ${{ camelCaseClass }} = {{ class }}::factory()->createOneQuietly();
+        $model = {{ class }}::factory()->createOneQuietly();
 
         $fieldTest = "";
         foreach (config('unit-tests.list-fields') as $field) {
-            if (Schema::hasColumn(${{ camelCaseClass }}->getTable(), $field)) {
-                ${{ camelCaseClass }}->update([$field => "test"]);
+            if (Schema::hasColumn($model->getTable(), $field)) {
+                $model->update([$field => "test"]);
                 $fieldTest = $field;
                 break;
             }
         }
 
-        $this->assertTrue(${{ camelCaseClass }}->wasChanged());
-        $this->assertTrue(array_key_exists($fieldTest, ${{ camelCaseClass }}->getChanges()));
-        $this->assertModelExists(${{ camelCaseClass }});
+        $this->assertTrue($model->wasChanged());
+        $this->assertTrue(array_key_exists($fieldTest, $model->getChanges()));
+        $this->assertModelExists($model);
     }
 
     /** @return void */
-    public function testCanDestroy{{ class }}(): void
+    public function testCanDelete{{ class }}(): void
     {
-        ${{ camelCaseClass }}Deleted = {{ class }}::factory()->createOneQuietly();
-        ${{ camelCaseClass }}Deleted->delete();
-        $this->assertModelMissing(${{ camelCaseClass }}Deleted);
+        $model = {{ class }}::factory()->createOneQuietly();
+        $model->delete();
+        $this->assertModelMissing($model);
     }
 }
