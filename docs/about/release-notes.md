@@ -20,7 +20,7 @@ layout:
 
 Here, there is all release notes of the [Laravel Unit Tests](https://packagist.org/packages/alexis-gss/laravel-unit-tests) package :
 
-## **\[v1.1.2] - 12/12/2024**
+## **\[v1.1.2] - 13/12/2024**
 
 ### Changed
 

@@ -3,7 +3,7 @@
   "description": "Test CRUDs assertions in Laravel project.",
   "type": "library",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "authors": [
     {
       "name": "Alexis Gousseau",
