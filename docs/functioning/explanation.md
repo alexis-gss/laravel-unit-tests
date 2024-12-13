@@ -16,7 +16,7 @@ layout:
 
 This package is quite simple to understand. It uses the dependencies of the Laravel framework to work well in a project using the same technology.
 
-On peut retrouver dans ce package :
+This package includes :
 
 * the service provider`UnitTestsServiceProvider`, in order to publish the files,
 * the configuration file `unit-tests.php`, to integrate the package into the desired project,

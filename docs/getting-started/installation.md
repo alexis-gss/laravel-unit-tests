@@ -21,7 +21,7 @@ layout:
 Add this composer package to your Laravel project:
 
 ```
-composer req alexis-gss/unit-tests-laravel
+composer req alexis-gss/laravel-unit-tests
 ```
 
 Then, copy few configuration files in your application from vendor package file:

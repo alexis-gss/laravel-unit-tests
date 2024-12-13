@@ -28,4 +28,4 @@ What's more, a whole host of features are already in place to help you organize 
 
 To keep track of all tasks, I've set up a [semantic version](https://semver.org/) of the project. When I'm developing a new feature that will involve major changes, or when I feel the project has reached a new milestone, I create what's known as a milestone. The milestone is made up of a multitude of tasks and represents an important stage in the project's progress.
 
-Lorsque cette étape est franchie, une nouvelle version majeure est attribuée au projet (see all Laravel Unit Tests project versions in the next section).
+When this stage is completed, a new major version is assigned to the project (see all [Laravel Unit Tests](https://packagist.org/packages/alexis-gss/laravel-unit-tests) project versions in the next section).
