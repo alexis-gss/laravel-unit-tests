@@ -9,30 +9,6 @@ on:
       - opened
 
 jobs:
-  Phpstan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: PHP version
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.3"
-      - name: Setup composer
-        uses: php-actions/composer@v6
-      - name: Phpstan validation
-        run: php vendor/bin/phpstan analyse
-
-  Phpcs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: PHP version
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.3"
-      - name: Setup composer
-        uses: php-actions/composer@v6
-      - name: Phpcs validation
-        run: php vendor/bin/phpcs
+  validation-php:
+    name: Validation php
+    uses: alexis-gss/github-workflows/.github/workflows/validation-php.yml@master
